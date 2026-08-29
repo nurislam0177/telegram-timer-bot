@@ -19,7 +19,6 @@ def run_dummy_server():
     server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
     server.serve_forever()
 
-# Fast loading direct Animated Cat GIF URLs
 CAT_GIFS = [
     "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcDdtY2J5cnV6amF6YnBzeWw0aG52dmNqamE5ZW0ydTFiNmw3MGl6ZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BzyTuYCmvSORqs1ABM/giphy.gif",
     "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdWUzbG8zbG5vYmxsZGNhMzgzbTNzeXg3eWZwdzRxbmdvMGwzdnZ3MSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/CjmvTCZf2U3p09Cn0h/giphy.gif",
@@ -34,6 +33,43 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def set_timer(update: Update, context: ContextTypes.DEFAULT_TYPE):
     try:
         minutes = float(context.args[0])
+        task_name = " ".join(context.args[1:]) if len(context.args) > 1 else "Kaj"
+        await update.message.reply_text(f"Timer set! 🐈 '{task_name}'-er jonno {minutes} minute por animated cat alert dibe.")
+        
+        await asyncio.sleep(minutes * 60)
+        
+        gif_url = random.choice(CAT_GIFS)
+        await update.message.reply_animation(
+            animation=gif_url,
+            caption=f"MEOW! 🐱 Apnar '{task_name}' setup korar {minutes} minute somoy par hoye geche!"
+        )
+    except (IndexError, ValueError):
+        await update.message.reply_text("Sothik bhabe likhun: `/task <minute> <kajer_naam>`")
+
+async def set_sec_timer(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    try:
+        seconds = float(context.args[0])
+        task_name = " ".join(context.args[1:]) if len(context.args) > 1 else "Kaj"
+        await update.message.reply_text(f"Timer set! 🐈 '{task_name}'-er jonno {seconds} second por animated cat alert dibe.")
+        
+        await asyncio.sleep(seconds)
+        
+        gif_url = random.choice(CAT_GIFS)
+        await update.message.reply_animation(
+            animation=gif_url,
+            caption=f"MEOW! 🐱 Apnar '{task_name}' setup korar {seconds} second somoy par hoye geche!"
+        )
+    except (IndexError, ValueError):
+        await update.message.reply_text("Sothik bhabe likhun: `/sec <second> <kajer_naam>`")
+
+if __name__ == "__main__":
+    threading.Thread(target=run_dummy_server, daemon=True).start()
+    app = ApplicationBuilder().token(TOKEN).build()
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("task", set_timer))
+    app.add_handler(CommandHandler("sec", set_sec_timer))
+    print("Bot active hoyeche...")
+    app.run_polling()
         task_name = " ".join(context.args[1:]) if len(context.args) > 1 else "Kaj"
         await update.message.reply_text(f"Timer set! 🐈 '{task_name}'-er jonno {minutes} minute por animated cat alert dibe.")
         
