@@ -19,11 +19,10 @@ def run_dummy_server():
     server = HTTPServer(("0.0.0.0", port), HealthCheckHandler)
     server.serve_forever()
 
-# Fast loading and direct supported Telegram GIFs
+# Direct MP4 animated video links (100% supported by Telegram)
 CAT_GIFS = [
-    "https://media.tenor.com/gO2p2J-mXjAAAAAC/cat-cat-jumping.gif",
-    "https://media.tenor.com/Z6P2u9k8u5MAAAAC/cat-funny.gif",
-    "https://media.tenor.com/J---A1Gv258AAAAC/cat-dance.gif"
+    "https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4",
+    "https://v.ftcdn.net/03/48/28/73/700_F_348287313_hN37WwKxP0R38Lp7m1Q0m519l99x9e5Y_ST.mp4"
 ]
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -39,11 +38,16 @@ async def set_timer(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         await asyncio.sleep(minutes * 60)
         
-        gif_url = random.choice(CAT_GIFS)
-        await update.message.reply_animation(
-            animation=gif_url,
-            caption=f"MEOW! 🐱 Apnar '{task_name}' setup korar {minutes} minute somoy par hoye geche!"
-        )
+        try:
+            gif_url = random.choice(CAT_GIFS)
+            await update.message.reply_animation(
+                animation=gif_url,
+                caption=f"MEOW! 🐱 Apnar '{task_name}' setup korar {minutes} minute somoy par hoye geche!"
+            )
+        except Exception:
+            # Animation send na hole direct text message pathabe
+            await update.message.reply_text(f"⏰ ALERT! 🐱 Apnar '{task_name}' setup korar {minutes} minute somoy par hoye geche!")
+            
     except (IndexError, ValueError):
         await update.message.reply_text("Sothik bhabe likhun: `/task <minute> <kajer_naam>`")
 
@@ -55,11 +59,16 @@ async def set_sec_timer(update: Update, context: ContextTypes.DEFAULT_TYPE):
         
         await asyncio.sleep(seconds)
         
-        gif_url = random.choice(CAT_GIFS)
-        await update.message.reply_animation(
-            animation=gif_url,
-            caption=f"MEOW! 🐱 Apnar '{task_name}' setup korar {seconds} second somoy par hoye geche!"
-        )
+        try:
+            gif_url = random.choice(CAT_GIFS)
+            await update.message.reply_animation(
+                animation=gif_url,
+                caption=f"MEOW! 🐱 Apnar '{task_name}' setup korar {seconds} second somoy par hoye geche!"
+            )
+        except Exception:
+            # Animation send na hole direct text message pathabe
+            await update.message.reply_text(f"⏰ ALERT! 🐱 Apnar '{task_name}' setup korar {seconds} second somoy par hoye geche!")
+            
     except (IndexError, ValueError):
         await update.message.reply_text("Sothik bhabe likhun: `/sec <second> <kajer_naam>`")
 
