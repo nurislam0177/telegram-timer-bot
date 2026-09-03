@@ -112,4 +112,7 @@ if __name__ == "__main__":
     
     print("Bot active hoyeche...")
     app.run_polling()
+    async def my_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("আসসালামু আলাইকুম আমি মোহাম্মদ নুর ইসলাম । যেকোনো প্রয়োজনে আমার সাথে যোগাযোগ করার জন্য 01339233696 WhatsApp এ যোগাযোগ করুন এই হলো আমার নম্বর")
+    app.add_handler(CommandHandler("myself", my_command))
     
