@@ -45,7 +45,6 @@ async def set_timer(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 caption=f"MEOW! 🐱 Apnar '{task_name}' setup korar {minutes} minute somoy par hoye geche!"
             )
         except Exception:
-            # Animation send na hole direct text message pathabe
             await update.message.reply_text(f"⏰ ALERT! 🐱 Apnar '{task_name}' setup korar {minutes} minute somoy par hoye geche!")
             
     except (IndexError, ValueError):
@@ -66,7 +65,6 @@ async def set_sec_timer(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 caption=f"MEOW! 🐱 Apnar '{task_name}' setup korar {seconds} second somoy par hoye geche!"
             )
         except Exception:
-            # Animation send na hole direct text message pathabe
             await update.message.reply_text(f"⏰ ALERT! 🐱 Apnar '{task_name}' setup korar {seconds} second somoy par hoye geche!")
             
     except (IndexError, ValueError):
